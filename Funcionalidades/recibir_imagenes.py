@@ -2,7 +2,8 @@
 from API.api_key import *
 import cv2
 import os
-
+import Funcionalidades.cotizacion as cot
+import time
 
 def recibir_imagenes(message):
     file_id = message.photo[1].file_id
@@ -17,6 +18,7 @@ def recibir_imagenes(message):
         print("La carpeta ya existe, no es necesario crearla")
     with open(carpeta_guardada + f"/imagen_Usuario.jpg","wb") as nuevo_archivo:
         nuevo_archivo.write(decarga_archivo)
+    time.sleep(2)
     chat_bot_key.reply_to(message,"Estamos validando espere un momento ....")
 
     #Aqui leeremos la imagen enviada por el usuario
@@ -33,9 +35,12 @@ def recibir_imagenes(message):
     if maximo_valor > 0.7:
         print("Imagen encontrada en la BD")
         chat_bot_key.send_message(chat_id=message.chat.id, text=f"""Descripción\nZapatos de Hombres\nCierre mediantes cordones a contraste\n100% de algodon.
-        \nDETALLES\nMarca:NIKE\nModelo:Nike Air Jordan 1 Chicago\nPrecio:110.00$ + ITBMS\nTalla:40,39,38,37\nTenemos 100 Unidades\nSolo en las sucursales de Chiriqui,Marvella.
+        \nDETALLES\nMarca:NIKE\nModelo:Nike Air Jordan 1 Chicago\nPrecio:110.00$ + ITBMS\nTalla:40,41,42\nTenemos 100 Unidades\nSolo en las sucursales de Chiriqui,Marvella.
         \nCUIDADOS\nLimpiar con paño humedo\nLimpiar con cepillo suave""")
-        chat_bot_key.send_message(chat_id=message.chat.id,text=f"si desea comprar el producto escribe /si")
+        chat_bot_key.send_message(chat_id=message.chat.id,text=f"ya que estas interesado en este producto, te haremos una cotización")
+        chat_bot_key.send_message(chat_id=message.chat.id,text=f"Esta bien, te enviaremos la cotización en un momento.")
+        time.sleep(2)
+        cot.generate_invoice(message)
 
     else:
         print("La imagen no se encuentra en nuestra BD")

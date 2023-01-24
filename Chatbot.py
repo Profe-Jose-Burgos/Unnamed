@@ -18,8 +18,4 @@ def recibe_texto_chatbot(message):
 def recibir_foto_chatbot(message):
     rec_images.recibir_imagenes(message)
 
-@chat_bot_key.message_handler(commands=['si'])
-def cot_chatbot(message):
-    chat_bot_key.send_message(chat_id=message.chat.id,text=f"Esta bien, te enviaremos la cotizacion en un momento.")
-    cot.generate_invoice(message)
 chat_bot_key.polling()

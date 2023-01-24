@@ -12,22 +12,21 @@ Productos = {"AIRJ" : {"Nombre":"Air Jordan 1 - Red", "Precio Unitario": 110.00}
 
 def generate_invoice(message):
     # Get user input for product code and quantity
-    product_code = Productos["AIRJ"]
     quantity = int(1)
 
     #lookup product and calculate subtotal
-    product = Productos[product_code]
+    product = Productos["AIRJ"]
     subtotal = quantity * product["Precio Unitario"]
 
     # add product and quantity to data list
     data.append([current_date.date(), product["Nombre"], quantity, "$ {:,.2f}".format(product["Precio Unitario"])])
 
     data.append(["Subtotal","","","$ {:,.2f}".format(subtotal)])
-    total = subtotal * 0.7
+    total = subtotal * 1.07
     data.append(["total","","","$ {:,.2f}".format(total)])
 
     # create invoice pdf template
-    invoice_pdf = SimpleDocTemplate("recibo_compra.pdf", pagesize = A4)
+    invoice_pdf = SimpleDocTemplate("cotizacion.pdf", pagesize = A4)
     # use default reportlab style
     styles = getSampleStyleSheet()
 
@@ -53,5 +52,6 @@ def generate_invoice(message):
 
     # build pdf with title and table
     invoice_pdf.build([title, receipt])
-    chat_bot_key.send_document(chat_id=message.chat.id, document=open('recibo_compra.pdf', 'rb'))
+    chat_bot_key.send_document(chat_id=message.chat.id, document=open('Cotizacion.pdf', 'rb'))
+    return generate_invoice
 
