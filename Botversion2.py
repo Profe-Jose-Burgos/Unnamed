@@ -8,9 +8,10 @@ import transformers
 import torch
 import time
 import pickle
+import tensorimage
 
 # Inicializar el bot de Telegram
-bot = telebot.TeleBot('5776364888:AAFHq7nhyMi7CQwZCWbyWl067d-KIozQB3s')
+bot = telebot.TeleBot('5946891713:AAEqH_b0lL4d26_HfX73EvV1Ny6fsh1jhNM')
 
 # Cargar el modelo BERT pre-entrenado
 model = transformers.BertForQuestionAnswering.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
@@ -35,14 +36,13 @@ def select_shipping_plan(message):
         return
 
 def select_consult(message):
-    if message.text == 'Consulta de horarios' or message.text == 'consulta de horarios':
+    if message.text == 'Consulta de productos' or message.text == 'consulta de productos':
         bot.reply_to(message, 'Escogiste la opcion de consultar horarios')
         bot.send_photo(message.chat.id, open('imagen1.jpg', 'rb'))
         return
     elif message.text == 'Consulta de paquetes' or message.text == 'consulta de paquetes':
         bot.reply_to(message, 'Escogiste la opcion de consultar productos')
         bot.send_message(message.chat.id, 'Enviame una imagen del producto que deseas consultar')
-        # aqui entra el modelo de reconocimiento de imagenes
         return
     elif message.text == 'Destinos de envio' or message.text == 'destinos de envio':
         bot.reply_to(message, 'Escogiste la opcion de consultar destinos de envio')
@@ -76,7 +76,7 @@ def answer_question(message):
         return
     
     if message.text == '/Asesoria':
-        bot.reply_to(message, 'Estoy aqui para orientarte escoge una opcion o dime en que te puedo ayudar: \n \n * Consulta de horarios \n * Consulta de paquetes \n * Destinos de envio')
+        bot.reply_to(message, 'Estoy aqui para orientarte escoge una opcion o dime en que te puedo ayudar: \n \n * Consulta de horarios \n * Consulta de productos \n * Destinos de envio')
         return
     else:
         select_consult(message)
